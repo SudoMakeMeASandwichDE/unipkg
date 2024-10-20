@@ -1,0 +1,13 @@
+config_path = None
+args = None
+pms = None
+alwaysask = False
+update_command = None
+upgrade_all_command = None
+update_and_upgrade = None
+upgrade_specified_command = None
+install_command = None
+remove_command = None
+clean_command = None
+search_repo_command = None
+search_local_command = None

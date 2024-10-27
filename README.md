@@ -6,26 +6,26 @@
 
 - Compatible with most Linux distributions.
 - Supports common package management commands: `update`, `upgrade`, `install`, `remove`, `clean`, `searchlocal`, and `search`.
-- Automatically detects the package manager of the system.
+- Automatically detects the available package manager(s) of the system.
 
 ## Requirements
 
 - Python 3.x
 - Linux operating system
 
-## Compatible package manager
+## Compatible package managers
 
 - `apt` (Debian/Ubuntu)
 - `pacman` (Arch)
 - `yay` (Arch)
-- `yum` (CentOS)
-- `dnf` (Fedora)
-- `zapper` (OpenSUSE)
+- `dnf` (Fedora/CentOS)
+- `zypper` (OpenSUSE)
 - `snap` (universal)
 
-## Tested package manager
+## Tested package managers
 
 - `apt`
+- `snap`
 
 **(Please report any problems!)**
 
@@ -41,16 +41,19 @@ To use `unipkg`, run the script with the desired command and any necessary packa
 
 ```bash
 python3 unipkg.py <manage> [packages]
-# Replace <manage> with one of the commands, e.g. 'update'
+# Replace <manage> with one of the commands, e.g. 'install'
 ```
 ## Commands
-`update`: Update the package manager's database.
-`upgrade`: Upgrade installed packages. You can specify package names or upgrade all.
-`install`: Install specified packages.
-`remove`: Remove specified packages.
-`clean`: Clean up unused dependencies.
-`search`: Search for packages in the online repository.
-`searchlocal`: Search for installed packages.
+
+- `update`: Update the package manager's database.
+- `upgrade`: Upgrade installed packages. You can specify package names or upgrade all.
+- `install`: Install specified packages.
+- `remove`: Remove specified packages.
+- `clean`: Clean up unused dependencies.
+- `search`: Search for packages in the online repository.
+- `searchlocal`: Search for installed packages.
+- `--set <update or manage>`: Configure, which package managers you want to update and on which you want to use the package management commands (install, remove, search, ...).
+- `--pm <package manager>`: Execute a command for a specific package manager.
 
 ## This isn't a finished version!
 

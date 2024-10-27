@@ -1,15 +1,13 @@
 def get_commands(pm):
-    update_command = None
-    upgrade_all_command = None
     update_and_upgrade = None
     upgrade_specified_command = None
     install_command = None
     remove_command = None
     clean_command = None
+    search_local_command = None
+    search_local_command = None
 
     if pm == 'apt':
-        update_command = "sudo apt update"
-        upgrade_all_command = "sudo apt upgrade"
         update_and_upgrade = "sudo apt update && sudo apt upgrade"
         upgrade_specified_command = "sudo apt install --only-upgrade"
         install_command = "sudo apt install"
@@ -19,8 +17,6 @@ def get_commands(pm):
         search_local_command = "apt list --installed"
 
     elif pm == 'pacman':
-        update_command = "sudo pacman -Sy"
-        upgrade_all_command = "sudo pacman -Syu"
         update_and_upgrade = "sudo pacman -Syu"
         upgrade_specified_command = "sudo pacman -S"
         install_command = "sudo pacman -S"
@@ -30,8 +26,6 @@ def get_commands(pm):
         search_local_command = "pacman -Qs"
 
     elif pm == 'yay':
-        update_command = "yay -Sy"
-        upgrade_all_command = "yay -Syu"
         update_and_upgrade = "yay -Syu"
         upgrade_specified_command = "yay -S"
         install_command = "yay -S"
@@ -41,8 +35,6 @@ def get_commands(pm):
         search_local_command = "yay -Qs"
 
     elif pm == 'dnf':
-        update_command = "sudo dnf check-update"
-        upgrade_all_command = "sudo dnf upgrade"
         update_and_upgrade = "sudo dnf upgrade"
         upgrade_specified_command = "sudo dnf upgrade"
         install_command = "sudo dnf install"
@@ -52,8 +44,6 @@ def get_commands(pm):
         search_local_command = "dnf list installed"
 
     elif pm == 'yum':
-        update_command = "sudo yum check-update"
-        upgrade_all_command = "sudo yum update"
         update_and_upgrade = "sudo yum update"
         upgrade_specified_command = "sudo yum update"
         install_command = "sudo yum install"
@@ -63,8 +53,6 @@ def get_commands(pm):
         search_local_command = "yum list installed"
 
     elif pm == 'zypper':
-        update_command = "sudo zypper refresh"
-        upgrade_all_command = "sudo zypper update"
         update_and_upgrade = "sudo zypper refresh && sudo zypper update"
         upgrade_specified_command = "sudo zypper up"
         install_command = "sudo zypper install"
@@ -74,8 +62,6 @@ def get_commands(pm):
         search_local_command = "zypper se --installed-only"
 
     elif pm == 'snap':
-        update_command = "sudo snap refresh"
-        upgrade_all_command = "sudo snap refresh"
         update_and_upgrade = "sudo snap refresh"
         upgrade_specified_command = "sudo snap refresh"
         install_command = "sudo snap install"
@@ -84,7 +70,44 @@ def get_commands(pm):
         search_repo_command = "snap find"
         search_local_command = "snap list"
 
-    if None in [update_command, upgrade_all_command, update_and_upgrade, upgrade_specified_command, install_command, remove_command, clean_command, search_repo_command, search_local_command]:
+    if None in [update_and_upgrade, upgrade_specified_command, install_command, remove_command, clean_command, search_repo_command, search_local_command]:
         return False
 
-    return (update_command, upgrade_all_command, update_and_upgrade, upgrade_specified_command, install_command, remove_command, clean_command, search_repo_command, search_local_command)
+    return (update_and_upgrade, upgrade_specified_command, install_command, remove_command, clean_command, search_repo_command, search_local_command)
+
+def get_update_commands(pms):
+    update_command = []
+    upgrade_all_command = []
+
+    if 'apt' in pms:
+        update_command.append("sudo apt update")
+        upgrade_all_command.append("sudo apt upgrade")
+
+    if 'pacman' in pms:
+        update_command.append("sudo pacman -Sy")
+        upgrade_all_command.append("sudo pacman -Syu")
+
+    if 'yay' in pms:
+        update_command.append("yay -Sy")
+        upgrade_all_command.append("yay -Syu")
+
+    if 'dnf' in pms:
+        update_command.append("sudo dnf check-update")
+        upgrade_all_command.append("sudo dnf upgrade")
+
+    if 'yum' in pms:
+        update_command.append("sudo yum check-update")
+        upgrade_all_command = "sudo yum update"
+
+    if 'zypper' in pms:
+        update_command.append("sudo zypper refresh")
+        upgrade_all_command.append("sudo zypper update")
+
+    if 'snap' in pms:
+        update_command.append("sudo snap refresh")
+        upgrade_all_command.append("sudo snap refresh")
+
+    if any(len(arr) == 0 for arr in [update_command, upgrade_all_command]):
+        return False
+
+    return (update_command, upgrade_all_command)

@@ -10,7 +10,7 @@
 
 ## Requirements
 
-- Python 3.x
+- At least Python 3.10
 - Linux operating system
 
 ## Compatible package managers

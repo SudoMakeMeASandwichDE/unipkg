@@ -9,6 +9,7 @@ import subprocess
 from src.get_commands import get_commands
 from src.get_commands import get_update_commands
 from src.settings import settings
+from src.loop import main_loop
 
 if platform.system() != "Linux":
      print("unipkg is only compatible with Linux.")
@@ -68,14 +69,14 @@ if vars.configuration:
 else:
     settings()
 
-parser = argparse.ArgumentParser(description="A unifying command line tool for managing packages on various Linux distributions.")
+vars.parser = argparse.ArgumentParser(description="A unifying command line tool for managing packages on various Linux distributions.")
 
-parser.add_argument('--pm', type=str, required=False, help='Choose, in which package manager you want to execute the command')
-parser.add_argument('--set', type=str, required=False, help="Choose, which pms you want to update with the update command and wich ones you want to use to install, delete and search packages")
-parser.add_argument('manage', choices=['update', 'upgrade', 'install', 'remove', 'clean', 'search', 'searchlocal'], type=str, nargs='?', help="Manage packages (update, upgrade, install, delete packages and remove unused dependencies), search for either installed or online packages or change settings for Package managers")
-parser.add_argument('packages', nargs='*', type=str, help='List the packages to upgrade, install, delete or search for (not used with update)')
+vars.parser.add_argument('--pm', type=str, required=False, help='Choose, in which package manager you want to execute the command')
+vars.parser.add_argument('--set', type=str, required=False, help="Choose, which pms you want to update with the update command and wich ones you want to use to install, delete and search packages")
+vars.parser.add_argument('manage', choices=['update', 'upgrade', 'install', 'remove', 'clean', 'search', 'searchlocal'], type=str, nargs='?', help="Manage packages (update, upgrade, install, delete packages and remove unused dependencies), search for either installed or online packages or change settings for Package managers")
+vars.parser.add_argument('packages', nargs='*', type=str, help='List the packages to upgrade, install, delete or search for (not used with update and clean)')
 
-vars.args = parser.parse_args()
+vars.args = vars.parser.parse_args()
 
 if vars.args.pm:
      if ' ' not in vars.args.pm.strip():
@@ -108,89 +109,4 @@ else:
      print("Your distribution has no supported package manager.")
      exit() 
 
-if not vars.args.manage and not vars.args.set and not vars.args.pm:
-     parser.print_help()
-     exit()
-
-if ' -' in vars.args.packages or ' --' in vars.args.packages or any(item.startswith('-') for item in vars.args.packages):
-     print('Error: no command line arguments after positional arguments')
-     exit()
-
-elif vars.args.set:
-     if vars.args.set == 'update':
-          settings(update=True)
-
-     elif vars.args.set == 'manage':
-          settings(manage=True)
-
-     elif vars.args.set != 'update' and vars.args.set != 'manage':
-          print("Usage:\n--set update\n--set manage")
-     exit()
-
-elif vars.args.manage == 'update':
-     if vars.args.packages:
-          print("No arguments expected after 'update'")
-          exit()
-     else:
-          try:
-               subprocess.run(' && '.join(vars.update_command), shell=True, check=True, text=True)
-          except Exception as e:
-               print(f"Error: {str(e)}")
-
-elif vars.args.manage == 'upgrade':
-     if not vars.args.packages:
-          try:
-               subprocess.run(' && '.join(vars.upgrade_all_command), shell=True, check=True, text=True)
-          except Exception as e:
-               print(f"Error: {str(e)}")
-     else:
-          try:
-               subprocess.run(vars.upgrade_specified_command + ' ' + ' '.join(vars.args.packages), shell=True, check=True, text=True)
-          except Exception as e:
-               print(f"Error: {str(e)}")
-
-elif vars.args.manage == 'install':
-     if not vars.args.packages:
-          print("Please specify the package(s) you want to install.")
-     else:
-          try:
-               subprocess.run(vars.install_command + ' ' + ' '.join(vars.args.packages), shell=True, check=True, text=True)
-          except Exception as e:
-               print(f"Error: {str(e)}")
-
-elif vars.args.manage == 'remove':
-     if not vars.args.packages:
-          print("Please specify the package(s) you want to delete.")
-     else:
-          try:
-               subprocess.run(vars.remove_command + ' ' + ' '.join(vars.args.packages), shell=True, check=True, text=True)
-          except Exception as e:
-               print(f"Error: {str(e)}")
-
-elif vars.args.manage == 'clean':
-     if vars.args.packages:
-          print("No arguments expected after 'clean'")
-          exit()
-     elif vars.clean_command:
-          try:
-               subprocess.run(vars.clean_command, shell=True, check=True, text=True)
-          except Exception as e:
-               print(f"Error: {str(e)}")
-
-elif vars.args.manage == 'search':
-     if not vars.args.packages:
-          print("Please specify search")
-     else:
-          try:
-               subprocess.run(vars.search_repo_command + ' ' + ' '.join(vars.args.packages), shell=True, check=True, text=True)
-          except Exception as e:
-               print(f"Error: {str(e)}")
-
-elif vars.args.manage == 'searchlocal':
-     if not vars.args.packages:
-          print("Please specify search")
-     else:
-          try:
-               subprocess.run(vars.search_local_command + ' ' + ' '.join(vars.args.packages), shell=True, check=True, text=True)
-          except Exception as e:
-               print(f"Error: {str(e)}")
+main_loop()

@@ -14,3 +14,4 @@ remove_command = None
 clean_command = None
 search_repo_command = None
 search_local_command = None
+parser = None

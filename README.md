@@ -6,7 +6,7 @@
 
 - Compatible with most Linux distributions.
 - Supports common package management commands: `update`, `upgrade`, `install`, `remove`, `clean`, `searchlocal`, and `search`.
-- Automatically detects the available package manager(s) of the system.
+- Automatically detects the available package manager(s) on the system.
 
 ## Requirements
 
@@ -20,19 +20,22 @@
 - `yay` (Arch)
 - `dnf` (Fedora/CentOS)
 - `zypper` (OpenSUSE)
+- `apk` (Alpine Linux)
 - `snap` (universal)
+- `flatpak` (universal)
 
 ## Tested package managers
 
 - `apt`
 - `snap`
+- `flatpak`
 
 **(Please report any problems!)**
 
 ## Installation
 
 1. Clone the repository or download the source code.
-2. Ensure you have Python 3 installed on your system.
+2. Ensure you have Python 3.10 installed on your system.
 3. Run `unipkg.py`
 
 ## Usage

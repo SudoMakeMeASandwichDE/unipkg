@@ -55,9 +55,10 @@ python3 unipkg.py <manage> [packages]
 - `clean`: Clean up unused dependencies.
 - `search`: Search for packages in the online repository.
 - `searchlocal`: Search for installed packages.
+- `everything`: Executes the `update`, `upgrade` and `clean`-command all at once.
 - `--set <update or manage>`: Configure, which package managers you want to update and on which you want to use the package management commands (install, remove, search, ...).
 - `--pm <package manager>`: Execute a command for a specific package manager.
 
 ## This isn't a finished version!
 
-But it works with it's few features. `unipkg` is in it's (very) early developement and there will be meny features added in near future. In this moment, `unipkg` only works with basic commands but you can expect some more interesting features coming in the next few weeks and months. 
+But it works with it's few features. `unipkg` is in it's (very) early developement and there will be many features added in near future. For this moment, `unipkg` only works with basic commands but you can expect some more interesting features coming in the next few weeks and months. 

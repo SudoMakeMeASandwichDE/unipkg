@@ -87,5 +87,29 @@ def execute(command):
                 except Exception as e:
                     print(f"Error: {str(e)}")
 
+        case 'everything':
+            if vars.args.packages:
+                print("No arguments expected after 'everything'")
+                exit()
+            else:
+                try:
+                    subprocess.run(' && '.join(vars.update_command), shell=True, check=True, text=True)
+                except subprocess.CalledProcessError:
+                    pass
+                except Exception as e:
+                    print(f"Error: {str(e)}")
+                try:
+                    subprocess.run(' && '.join(vars.upgrade_all_command), shell=True, check=True, text=True)
+                except subprocess.CalledProcessError:
+                    pass
+                except Exception as e:
+                    print(f"Error: {str(e)}")
+                try:
+                    subprocess.run(vars.clean_command, shell=True, check=True, text=True)
+                except subprocess.CalledProcessError:
+                    pass
+                except Exception as e:
+                    print(f"Error: {str(e)}")
+
         case _:
             print(f"Unknown command: {command}")

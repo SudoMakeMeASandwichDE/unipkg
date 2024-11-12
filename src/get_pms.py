@@ -1,5 +1,6 @@
 import distro
-from src.check_snap import is_snap_installed
+from src.check_other_pms import is_snap_installed
+from src.check_other_pms import is_flatpak_installed
 
 def get_pms():
     used_distro = distro.name().lower()
@@ -18,7 +19,13 @@ def get_pms():
     if "suse" in base_distros or "suse" in used_distro:
         available_pms = ['zypper']
     
+    if "alpine" in base_distros or "alpine" in used_distro:
+        available_pms = ['apk']
+    
     if is_snap_installed():
         available_pms.append('snap')
+
+    if is_flatpak_installed():
+        available_pms.append('flatpak')
 
     return available_pms if available_pms else False

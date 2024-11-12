@@ -4,7 +4,7 @@ def get_commands(pm):
     install_command = None
     remove_command = None
     clean_command = None
-    search_local_command = None
+    search_repo_command = None
     search_local_command = None
 
     if pm == 'apt':
@@ -70,6 +70,24 @@ def get_commands(pm):
         search_repo_command = "snap find"
         search_local_command = "snap list"
 
+    elif pm == 'flatpak':
+        update_and_upgrade = "sudo flatpak update"
+        upgrade_specified_command = "sudo flatpak update"
+        install_command = "sudo flatpak install"
+        remove_command = "sudo flatpak uninstall"
+        clean_command = "sudo flatpak uninstall --unused"
+        search_repo_command = "flatpak search"
+        search_local_command = "flatpak list | grep"
+
+    elif pm == 'apk':
+        update_and_upgrade = "sudo apk update && sudo apk upgrade"
+        upgrade_specified_command = "sudo apk upgrade"
+        install_command = "sudo apk add"
+        remove_command = "sudo apk del"
+        clean_command = "sudo apk cache clean"
+        search_repo_command = "apk search"
+        search_local_command = "apk info -vv | grep installed"
+
     if None in [update_and_upgrade, upgrade_specified_command, install_command, remove_command, clean_command, search_repo_command, search_local_command]:
         return False
 
@@ -97,7 +115,7 @@ def get_update_commands(pms):
 
     if 'yum' in pms:
         update_command.append("sudo yum check-update")
-        upgrade_all_command = "sudo yum update"
+        upgrade_all_command.append("sudo yum update")
 
     if 'zypper' in pms:
         update_command.append("sudo zypper refresh")
@@ -107,7 +125,16 @@ def get_update_commands(pms):
         update_command.append("sudo snap refresh")
         upgrade_all_command.append("sudo snap refresh")
 
+    if 'flatpak' in pms:
+        update_command.append("sudo flatpak update")
+        upgrade_all_command.append("sudo flatpak update")
+
+    if 'apk' in pms:
+        update_command.append("sudo apk update")
+        upgrade_all_command.append("sudo apk upgrade")
+
     if any(len(arr) == 0 for arr in [update_command, upgrade_all_command]):
         return False
 
     return (update_command, upgrade_all_command)
+

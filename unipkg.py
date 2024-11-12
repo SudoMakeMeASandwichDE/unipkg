@@ -5,7 +5,6 @@ import platform
 import ast
 from src.get_pms import get_pms
 import src.vars as vars
-import subprocess
 from src.get_commands import get_commands
 from src.get_commands import get_update_commands
 from src.settings import settings
@@ -73,7 +72,7 @@ vars.parser = argparse.ArgumentParser(description="A unifying command line tool 
 
 vars.parser.add_argument('--pm', type=str, required=False, help='Choose, in which package manager you want to execute the command')
 vars.parser.add_argument('--set', type=str, required=False, help="Choose, which pms you want to update with the update command and wich ones you want to use to install, delete and search packages")
-vars.parser.add_argument('manage', choices=['update', 'upgrade', 'install', 'remove', 'clean', 'search', 'searchlocal'], type=str, nargs='?', help="Manage packages (update, upgrade, install, delete packages and remove unused dependencies), search for either installed or online packages or change settings for Package managers")
+vars.parser.add_argument('manage', choices=['update', 'upgrade', 'install', 'remove', 'clean', 'search', 'searchlocal', 'everything'], type=str, nargs='?', help="Manage packages (update, upgrade, install, delete packages and remove unused dependencies), search for either installed or online packages or change settings for Package managers")
 vars.parser.add_argument('packages', nargs='*', type=str, help='List the packages to upgrade, install, delete or search for (not used with update and clean)')
 
 vars.args = vars.parser.parse_args()

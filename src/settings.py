@@ -11,8 +11,11 @@ def settings(update=False, manage=False):
                 for p in vars.pms:
                     print(str(i) + ". " + p)
                     i += 1
-                update_pms = input("Which pms do you want to update with the update command (separate with space)?\n> ").strip().split()
-                
+                try:
+                    update_pms = input("Which pms do you want to update with the update command (separate with space)?\n> ").strip().split()
+                except KeyboardInterrupt:
+                    print("\nexited with ^C")
+                    exit()                
                 if all(item in vars.pms for item in update_pms):
                     vars.update_pms = update_pms
                     
@@ -36,7 +39,11 @@ def settings(update=False, manage=False):
                 for p in vars.pms:
                     print(str(i) + ". " + p)
                     i += 1
-                install_pm = input("Which pm do you want to use with the install, remove and search command?\n> ").strip()
+                try:
+                    install_pm = input("Which pm do you want to use with the install, remove and search command?\n> ").strip()
+                except KeyboardInterrupt:
+                    print("\nexited with ^C")
+                    exit()
                 if install_pm in vars.pms:
                     vars.install_pm = install_pm
                     try:

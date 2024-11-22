@@ -1,6 +1,7 @@
 # unipkg
 
 `unipkg` is a command-line tool designed for managing packages across various Linux distributions. It provides a unified interface for common package management tasks such as updating, upgrading, installing, removing, and cleaning packages.
+Intended for Linux noobs and people who often work on various distributions and don't want do write down syntax of package managers (understandable).
 
 ## Features
 
@@ -35,15 +36,15 @@
 ## Installation
 
 1. Clone the repository or download the source code.
-2. Ensure you have Python 3.10 installed on your system.
-3. Run `unipkg.py`
+2. Ensure you have Python 3.10 installed on your Linux system.
+3. Open a terminal in the project folder and run `pip install .`.
 
 ## Usage
 
 To use `unipkg`, run the script with the desired command and any necessary package names. The basic syntax is:
 
 ```bash
-python3 unipkg.py <manage> [packages]
+unipkg <manage> [packages]
 # Replace <manage> with one of the commands, e.g. 'install'
 ```
 ## Commands

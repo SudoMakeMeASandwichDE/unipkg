@@ -9,7 +9,10 @@ def execute(command):
                 exit()
             else:
                 try:
-                    subprocess.run(' && '.join(vars.update_command), shell=True, check=True, text=True)
+                    for i in vars.update_command:
+                        print(f"---Executing '{i}'---")
+                        subprocess.run(i, shell=True, check=True, text=True)
+                        print()
                 except subprocess.CalledProcessError:
                     pass
                 except Exception as e:
@@ -18,7 +21,10 @@ def execute(command):
         case 'upgrade':
             if not vars.args.packages:
                 try:
-                    subprocess.run(' && '.join(vars.upgrade_all_command), shell=True, check=True, text=True)
+                    for i in vars.upgrade_all_command:
+                        print(f"---Executing '{i}'---")
+                        subprocess.run(i, shell=True, check=True, text=True)
+                        print()
                 except subprocess.CalledProcessError:
                     pass
                 except Exception as e:

@@ -10,7 +10,7 @@ def execute(command):
             else:
                 try:
                     for i in vars.update_command:
-                        print(f"---Executing '{i}'---")
+                        print(f"---executing '{i}'---")
                         subprocess.run(i, shell=True, check=True, text=True)
                         print()
                 except subprocess.CalledProcessError:
@@ -22,7 +22,7 @@ def execute(command):
             if not vars.args.packages:
                 try:
                     for i in vars.upgrade_all_command:
-                        print(f"---Executing '{i}'---")
+                        print(f"---executing '{i}'---")
                         subprocess.run(i, shell=True, check=True, text=True)
                         print()
                 except subprocess.CalledProcessError:
@@ -98,24 +98,10 @@ def execute(command):
                 print("No arguments expected after 'everything'")
                 exit()
             else:
-                try:
-                    subprocess.run(' && '.join(vars.update_command), shell=True, check=True, text=True)
-                except subprocess.CalledProcessError:
-                    pass
-                except Exception as e:
-                    print(f"Error: {str(e)}")
-                try:
-                    subprocess.run(' && '.join(vars.upgrade_all_command), shell=True, check=True, text=True)
-                except subprocess.CalledProcessError:
-                    pass
-                except Exception as e:
-                    print(f"Error: {str(e)}")
-                try:
-                    subprocess.run(vars.clean_command, shell=True, check=True, text=True)
-                except subprocess.CalledProcessError:
-                    pass
-                except Exception as e:
-                    print(f"Error: {str(e)}")
+                execute('update')
+                execute('upgrade')
+                print(f"---executing '{vars.clean_command}'---")
+                execute('clean')
 
         case _:
             print(f"Unknown command: {command}")

@@ -42,12 +42,11 @@ Intended for Linux beginners and people who often work on various distributions 
 ## Installation
 
 1. ensure you have at least Python version 3.10 installed on your Linux system
-2. clone the repository or download the source code
-3. open a terminal in the project folder and run `pip install .`
+2. run `pip install unipkg`
 
 ## Usage
 
-To use `unipkg`, run the script with the desired command and any necessary package names. The basic syntax is:
+To use `unipkg`, run the command with the desired argument and any necessary package names. The basic syntax is:
 
 ```bash
 unipkg <manage> [packages]

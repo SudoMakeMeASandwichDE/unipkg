@@ -44,11 +44,13 @@ def settings(update=False, manage=False):
                 except KeyboardInterrupt:
                     print("\nexited with ^C")
                     exit()
+                with open(vars.config_path, 'r') as f:
+                    content = f.readlines()
                 if install_pm in vars.pms:
                     vars.install_pm = install_pm
                     try:
                         with open(vars.config_path, 'w') as f:
-                            f.write(content[0]if len(content) >= 0 else '')
+                            f.write(content[0] if len(content) >= 0 else '')
                             f.write(install_pm)
                     except Exception as e:
                         print(f"Error while saving install_pm: {str(e)}")

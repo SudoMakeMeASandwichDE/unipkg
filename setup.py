@@ -5,7 +5,7 @@ with open('README.md', 'r', encoding='utf-8') as f:
 
 setup(
     name="unipkg",
-    version="0.1.2",
+    version="0.1.3",
     description="A unifying package manager command line tool",
     author="SudoMakeMeASandwichDE",
     author_email="sudosandwich.contact@gmail.com",

@@ -29,6 +29,22 @@ def main():
 
      vars.config_path = config_file_path
 
+     if not os.path.exists(config_file_path):
+          try:
+               with open(config_file_path, 'w') as f:
+                    pass
+          except Exception as e:
+               print(f"Error while trying to make configuration file: {e}")
+               exit()
+     
+     try:
+          with open(config_file_path, 'r') as f:
+               if not f.readlines():
+                    settings()
+     except Exception as e:
+          print(f"Error while trying to read configuration file: {str(e)}")
+          exit()
+
      try:
           with open(config_file_path, 'r') as f:
                vars.configuration = [line.strip() for line in f.readlines()]

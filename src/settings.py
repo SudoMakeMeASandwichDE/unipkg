@@ -1,4 +1,5 @@
 import src.vars as vars
+from src.logging import log
 import json
 
 def settings(update=False, manage=False):
@@ -14,6 +15,7 @@ def settings(update=False, manage=False):
                 try:
                     update_pms = input("Which pms do you want to update with the update command (separate with space)?\n> ").strip().split()
                 except KeyboardInterrupt:
+                    log("exited by user")
                     print("\nexited with ^C")
                     exit()                
                 if all(item in vars.pms for item in update_pms):
@@ -23,7 +25,9 @@ def settings(update=False, manage=False):
                         with open(vars.config_path, 'w') as a:
                             a.write(json.dumps(vars.update_pms) + '\n')
                             a.write(content[1] if len(content) > 1 else '')
+                            log(f"update pms set to {', '.join(update_pms)}")
                     except Exception as e:
+                        log(f"error while saving settings (update pms): {str(e)}", error=True)
                         print(f"Error while saving settings: {str(e)}")
                         exit()
                     print("Saved settings.")
@@ -42,6 +46,7 @@ def settings(update=False, manage=False):
                 try:
                     install_pm = input("Which pm do you want to use with the install, remove and search command?\n> ").strip()
                 except KeyboardInterrupt:
+                    log("exited by user")
                     print("\nexited with ^C")
                     exit()
                 with open(vars.config_path, 'r') as f:
@@ -52,7 +57,9 @@ def settings(update=False, manage=False):
                         with open(vars.config_path, 'w') as f:
                             f.write(content[0] if len(content) >= 0 else '')
                             f.write(install_pm)
+                            log(f"set primary (managing) pm to {install_pm}")
                     except Exception as e:
+                        log(f"Error while saving install_pm: {str(e)}", error=True)
                         print(f"Error while saving install_pm: {str(e)}")
                         exit()
                     print("Saved settings.")
@@ -63,4 +70,5 @@ def settings(update=False, manage=False):
                     continue
 
     else:
+        log(f"only one package manager was available: {vars.pms[0]}, it was used")
         print(f"Only one package manager is available: {vars.pms[0]}. It will be used.")

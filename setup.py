@@ -5,7 +5,7 @@ with open('README.md', 'r', encoding='utf-8') as f:
 
 setup(
     name="unipkg",
-    version="0.1.3",
+    version="0.2.0",
     description="A unifying package manager command line tool",
     author="SudoMakeMeASandwichDE",
     author_email="sudosandwich.contact@gmail.com",
@@ -22,7 +22,7 @@ setup(
     packages=['src'],
     py_modules=["unipkg"],
     install_requires=[
-
+        'distro'
     ],
     entry_points={
         "console_scripts": [

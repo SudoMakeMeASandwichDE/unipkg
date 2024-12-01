@@ -1,4 +1,5 @@
 config_path = None
+config_folder = None
 args = None
 pms = None
 alwaysask = False
@@ -14,4 +15,6 @@ remove_command = None
 clean_command = None
 search_repo_command = None
 search_local_command = None
+info_command = None
+addrepo_command = None
 parser = None

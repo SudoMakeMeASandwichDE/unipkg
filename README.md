@@ -9,10 +9,13 @@ Intended for Linux beginners and people who often work on various distributions 
 2. When executing a command like `unipkg install firefox` it translates it to the equivalent command of the chosen package manager (e.g., for `apt` `sudo apt install firefox` or for `pacman` `sudo pacman -S firefox`).
 3. The now translated command wil be executed in the current environment. Remember that most likely you will be asked by `sudo` to enter your password. 
 
+Configuration file is on `~/.config/unipkg/unipkg.conf`
+Log file is on `~/.config/unipkg/unipkg.log`
+
 ## Features
 
 - Compatible with most Linux distributions.
-- Supports common package management commands: `update`, `upgrade`, `install`, `remove`, `clean`, `searchlocal`, and `search`.
+- Supports common package management commands: `update`, `upgrade`, `install`, `remove`, `clean`, `searchlocal`, `search`, `info` and `addrepo`.
 - Automatically detects the available package manager(s) on the system.
 
 ## Requirements
@@ -28,12 +31,14 @@ Intended for Linux beginners and people who often work on various distributions 
 - `dnf` (Fedora/CentOS)
 - `zypper` (OpenSUSE)
 - `apk` (Alpine Linux)
+- Portage (gentoo)
 - `snap` (universal)
 - `flatpak` (universal)
 
 ## Tested package managers
 
 - `apt`
+- `pacman`
 - `snap`
 - `flatpak`
 
@@ -61,10 +66,12 @@ unipkg <manage> [packages]
 - `clean`: Clean up unused dependencies.
 - `search`: Search for packages in the online repository.
 - `searchlocal`: Search for installed packages.
+- `info`: Display information for a package.
+- `addrepo`: Add an external repository.
 - `everything`: Executes the `update`, `upgrade` and `clean`-command all at once.
 - `--set <update or manage>`: Configure, which package managers you want to update and on which you want to use the package management commands (install, remove, search, etc.).
 - `--pm <package manager>`: Execute a command for a specific package manager.
 
 ## This isn't a finished version!
 
-But it works with it's few features. `unipkg` is in it's (very) early development, and there will be many features added in near future. For this moment, `unipkg` only works with basic commands, but you can expect some more interesting features coming in the next few weeks and months. 
+But it works with it's few features. `unipkg` is in it's early development, and there will be many features added in near future. For this moment, `unipkg` only works with basic commands, but you can expect some more interesting features coming in the next few weeks and months. 

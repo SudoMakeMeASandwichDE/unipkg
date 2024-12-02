@@ -56,4 +56,4 @@ def clean_log():
         with open(file_path, 'w') as file:
             file.writelines(lines_to_keep)
     except IOError as e:
-        print(f"Failed to write cleaned log file: {str(e)}")
+        print(f"Failed to clean log file: {str(e)}")

@@ -15,11 +15,11 @@ def main_loop():
         if vars.args.set == 'update':
             settings(update=True)
 
-        elif vars.args.set == 'manage':
+        elif vars.args.set == 'primary':
             settings(manage=True)
 
-        elif vars.args.set != 'update' and vars.args.set != 'manage':
-            print("Usage:\n--set update\n--set manage")
+        elif vars.args.set != 'update' and vars.args.set != 'primary':
+            print("Usage:\n--set update\n--set primary")
         exit()
 
     execute(vars.args.manage)

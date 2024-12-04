@@ -20,7 +20,7 @@ def main():
      config_path = os.path.expanduser('~/.config/unipkg/')
      vars.config_folder = config_path
 
-     no_folder = True if not os.path.exists else False
+     no_folder = True if not os.path.exists(config_path) else False
           
      try:
           os.makedirs(config_path, exist_ok=True)
@@ -108,19 +108,19 @@ def main():
      vars.parser = argparse.ArgumentParser(description="A unifying command line tool for managing packages on various Linux distributions.")
 
      vars.parser.add_argument('--pm', type=str, required=False, help='Choose, in which package manager you want to execute the command')
-     vars.parser.add_argument('--set', type=str, required=False, help="Choose, which pms you want to update with the update command and wich ones you want to use to install, delete and search packages")
+     vars.parser.add_argument('--set', type=str, required=False, help="Choose, which pms you want to update with the update command and wich ones you want to use as primary (install, delete, search packages)")
      vars.parser.add_argument('manage', choices=['update', 'upgrade', 'install', 'remove', 'clean', 'search', 'searchlocal', 'info', 'addrepo', 'everything'], type=str, nargs='?', help="Manage packages (update, upgrade, install, delete packages and remove unused dependencies), search for either installed or online packages or change settings for Package managers")
      vars.parser.add_argument('packages', nargs='*', type=str, help='List the packages to upgrade, install, delete or search for (not used with update and clean)')
 
      vars.args = vars.parser.parse_args()
 
      if vars.args.pm:
-          log("using --pm argument")
           if ' ' not in vars.args.pm.strip():
                if vars.args.pm.strip() in vars.pms:
                     vars.install_pm = vars.args.pm
                     vars.update_pms = []
                     vars.update_pms.append(vars.args.pm)
+                    log(f"using --pm argument ({vars.args.pm})")
                else:
                     print("Package manager not found.")
                     exit()

@@ -1,4 +1,3 @@
-# Made in Germany
 import argparse
 import os
 import platform
@@ -109,7 +108,7 @@ def main():
 
      vars.parser.add_argument('--pm', type=str, required=False, help='Choose, in which package manager you want to execute the command')
      vars.parser.add_argument('--set', type=str, required=False, help="Choose, which pms you want to update with the update command and wich ones you want to use as primary (install, delete, search packages)")
-     vars.parser.add_argument('manage', choices=['update', 'upgrade', 'install', 'remove', 'clean', 'search', 'searchlocal', 'info', 'addrepo', 'everything'], type=str, nargs='?', help="Manage packages (update, upgrade, install, delete packages and remove unused dependencies), search for either installed or online packages or change settings for Package managers")
+     vars.parser.add_argument('manage', choices=['update', 'update-repo', 'upgrade', 'install', 'remove', 'clean', 'search', 'searchlocal', 'info', 'addrepo'], type=str, nargs='?', help="Manage packages (update, upgrade, install, delete packages and remove unused dependencies), search for either installed or online packages or change settings for Package managers")
      vars.parser.add_argument('packages', nargs='*', type=str, help='List the packages to upgrade, install, delete or search for (not used with update and clean)')
 
      vars.args = vars.parser.parse_args()
@@ -134,7 +133,7 @@ def main():
 
      commands = get_commands(vars.install_pm)
      if commands:
-          vars.update_and_upgrade, vars.upgrade_specified_command, vars.install_command, vars.remove_command, vars.clean_command, vars.search_repo_command, vars.search_local_command, vars.info_command, vars.addrepo_command = commands
+          vars.upgrade_specified_command, vars.install_command, vars.remove_command, vars.clean_command, vars.search_repo_command, vars.search_local_command, vars.info_command, vars.addrepo_command = commands
      else:
           log("no supported package manager detected, exiting")
           print("Your distribution has no supported package manager.")
@@ -142,7 +141,7 @@ def main():
 
      update_commands = get_update_commands(vars.update_pms)
      if update_commands:
-          vars.update_command, vars.upgrade_all_command = update_commands
+          vars.update_command, vars.upgrade_all_command, vars.update_and_upgrade = update_commands
      else:
           log("no supported package manager detected, exiting")
           print("Your distribution has no supported package manager.")

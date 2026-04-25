@@ -10,9 +10,8 @@ def get_commands(pm):
     addrepo_command = None
 
     if pm == 'apt':
-        update_and_upgrade = "sudo apt update && sudo apt upgrade"
         upgrade_specified_command = "sudo apt install --only-upgrade"
-        install_command = "sudo apt install"
+        install_command = "sudo apt install -y"
         remove_command = "sudo apt remove --purge"
         clean_command = "sudo apt clean && sudo apt autoremove"
         search_repo_command = "apt search"
@@ -21,7 +20,6 @@ def get_commands(pm):
         addrepo_command = "sudo add-apt-repository"
 
     elif pm == 'pacman':
-        update_and_upgrade = "sudo pacman -Syu"
         upgrade_specified_command = "sudo pacman -S"
         install_command = "sudo pacman -S"
         remove_command = "sudo pacman -Rns"
@@ -32,7 +30,6 @@ def get_commands(pm):
         addrepo_command = False
 
     elif pm == 'yay':
-        update_and_upgrade = "yay -Syu"
         upgrade_specified_command = "yay -S"
         install_command = "yay -S"
         remove_command = "yay -Rns"
@@ -43,7 +40,6 @@ def get_commands(pm):
         addrepo_command = False
 
     elif pm == 'dnf':
-        update_and_upgrade = "sudo dnf upgrade"
         upgrade_specified_command = "sudo dnf upgrade"
         install_command = "sudo dnf install"
         remove_command = "sudo dnf remove"
@@ -54,7 +50,6 @@ def get_commands(pm):
         addrepo_command = "sudo dnf config-manager --add-repo"
 
     elif pm == 'yum':
-        update_and_upgrade = "sudo yum update"
         upgrade_specified_command = "sudo yum update"
         install_command = "sudo yum install"
         remove_command = "sudo yum remove"
@@ -65,7 +60,6 @@ def get_commands(pm):
         addrepo_command = "sudo yum-config-manager --add-repo"
 
     elif pm == 'zypper':
-        update_and_upgrade = "sudo zypper refresh && sudo zypper update"
         upgrade_specified_command = "sudo zypper up"
         install_command = "sudo zypper install"
         remove_command = "sudo zypper remove"
@@ -76,7 +70,6 @@ def get_commands(pm):
         addrepo_command = "sudo zypper addrepo"
 
     elif pm == 'snap':
-        update_and_upgrade = "sudo snap refresh"
         upgrade_specified_command = "sudo snap refresh"
         install_command = "sudo snap install"
         remove_command = "sudo snap remove"
@@ -87,7 +80,6 @@ def get_commands(pm):
         addrepo_command = False
 
     elif pm == 'flatpak':
-        update_and_upgrade = "sudo flatpak update"
         upgrade_specified_command = "sudo flatpak update"
         install_command = "sudo flatpak install"
         remove_command = "sudo flatpak uninstall"
@@ -98,7 +90,6 @@ def get_commands(pm):
         addrepo_command = "sudo flatpak remote-add"
 
     elif pm == 'apk':
-        update_and_upgrade = "sudo apk update && sudo apk upgrade"
         upgrade_specified_command = "sudo apk upgrade"
         install_command = "sudo apk add"
         remove_command = "sudo apk del"
@@ -109,7 +100,6 @@ def get_commands(pm):
         addrepo_command = False
 
     elif pm == 'portage':
-        update_and_upgrade = "sudo emerge --sync && sudo emerge -uDU @world"
         upgrade_specified_command = False
         install_command = "sudo emerge"
         remove_command = "sudo emerge --depclean"
@@ -119,57 +109,69 @@ def get_commands(pm):
         info_command = "emerge --info"
         addrepo_command = False
 
-    if None in [update_and_upgrade, upgrade_specified_command, install_command, remove_command, clean_command, search_repo_command, search_local_command, info_command]:
+    if None in [upgrade_specified_command, install_command, remove_command, clean_command, search_repo_command, search_local_command, info_command]:
         return False
 
-    return (update_and_upgrade, upgrade_specified_command, install_command, remove_command, clean_command, search_repo_command, search_local_command, info_command, addrepo_command)
+    return (upgrade_specified_command, install_command, remove_command, clean_command, search_repo_command, search_local_command, info_command, addrepo_command)
 
 def get_update_commands(pms):
     update_command = []
     upgrade_all_command = []
+    update_and_upgrade = []
 
     if 'apt' in pms:
         update_command.append("sudo apt update")
         upgrade_all_command.append("sudo apt upgrade")
+        update_and_upgrade.append("sudo apt update && sudo apt upgrade -y")
+
 
     if 'pacman' in pms:
         update_command.append("sudo pacman -Sy")
         upgrade_all_command.append("sudo pacman -Syu")
+        update_and_upgrade.append("sudo pacman -Syu")
 
     if 'yay' in pms:
         update_command.append("yay -Sy")
         upgrade_all_command.append("yay -Syu")
+        update_and_upgrade.append("yay -Syu")
 
     if 'dnf' in pms:
         update_command.append("sudo dnf check-update")
         upgrade_all_command.append("sudo dnf upgrade")
+        update_and_upgrade.append("sudo dnf upgrade")
 
     if 'yum' in pms:
         update_command.append("sudo yum check-update")
         upgrade_all_command.append("sudo yum update")
+        update_and_upgrade.append("sudo yum update")
 
     if 'zypper' in pms:
         update_command.append("sudo zypper refresh")
         upgrade_all_command.append("sudo zypper update")
+        update_and_upgrade.append("sudo zypper refresh && sudo zypper update")
 
     if 'snap' in pms:
         update_command.append("sudo snap refresh")
         upgrade_all_command.append("sudo snap refresh")
+        update_and_upgrade.append("sudo snap refresh")
 
     if 'flatpak' in pms:
         update_command.append("sudo flatpak update")
         upgrade_all_command.append("sudo flatpak update")
+        update_and_upgrade.append("sudo flatpak update")
 
     if 'apk' in pms:
         update_command.append("sudo apk update")
         upgrade_all_command.append("sudo apk upgrade")
+        update_and_upgrade.append("sudo apk update && sudo apk upgrade")
     
     if 'portage' in pms:
         update_command.append("emerge --sync")
         upgrade_all_command.append("emerge --update --deep --newuse @world")
+        update_and_upgrade.append("sudo emerge --sync && sudo emerge -uDU @world")
 
     if any(len(arr) == 0 for arr in [update_command, upgrade_all_command]):
         return False
 
-    return (update_command, upgrade_all_command)
+    return (update_command, upgrade_all_command, update_and_upgrade)
 

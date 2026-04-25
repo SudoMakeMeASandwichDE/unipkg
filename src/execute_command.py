@@ -1,9 +1,13 @@
 import subprocess
 from src.logging import log
 import src.vars as vars
+from src.rich_implementation import print_exe_info
 
 def execute(command):
     def run_and_log(command_str):
+        print()
+        print_exe_info(f"{command_str}")
+        print()
         log(command_str, command=True)
         try:
             result = subprocess.run(
@@ -22,19 +26,32 @@ def execute(command):
         except Exception as e:
             log({str(e)}, error=True)
             raise e
+        except KeyboardInterrupt:
+            log("cancelled by user", error=True)
 
     not_available_msg = f"'{command}'-command not available for current package manager."
     match command:
-        case 'update':
+        case 'update-repo':
             if not False in vars.update_command:
+                if vars.args.packages:
+                    print("No arguments expected after 'update-repo'")
+                    exit()
+                else:
+                    for i in vars.update_command:
+                        
+                        run_and_log(i)
+                        
+            else:
+                print(not_available_msg)
+        
+        case 'update':
+            if not False in vars.update_command and not False in vars.upgrade_all_command:
                 if vars.args.packages:
                     print("No arguments expected after 'update'")
                     exit()
                 else:
-                    for i in vars.update_command:
-                        print(f"---executing '{i}'---")
+                    for i in vars.update_and_upgrade:
                         run_and_log(i)
-                        print()
             else:
                 print(not_available_msg)
 
@@ -42,9 +59,9 @@ def execute(command):
             if not False in vars.upgrade_all_command:
                 if not vars.args.packages:
                     for i in vars.upgrade_all_command:
-                        print(f"---executing '{i}'---")
+                        
                         run_and_log(i)
-                        print()
+                        
                 elif vars.upgrade_specified_command:
                     run_and_log(vars.upgrade_specified_command + ' ' + ' '.join(vars.args.packages))
                 else:
@@ -113,16 +130,8 @@ def execute(command):
                     print("Please specify repository link.")
                 else:
                     run_and_log(vars.addrepo_command + ' ' + ' '.join(vars.args.packages))
-
-        case 'everything':
-            if vars.args.packages:
-                print("No arguments expected after 'everything'")
-                exit()
             else:
-                execute('update')
-                execute('upgrade')
-                print(f"---executing '{vars.clean_command}'---")
-                execute('clean')
+                print(not_available_msg)
 
         case _:
             print(f"Unknown command: {command}")

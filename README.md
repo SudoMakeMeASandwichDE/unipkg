@@ -5,7 +5,7 @@ Intended for Linux beginners and people who often work on various distributions 
 
 ## How it works
 
-1. By the first time executing `unipkg`, you have to configure which package managers you want to include for updating and upgrading packages and which package manager you want to use primarily (for all the other commands, e.g., installing packages). You can always change the configuration with `unipkg --set update` or `unipkg --set primary`. 
+1. By the first time executing `unipkg`, you have to configure which package managers you want to include for updating and upgrading packages and which package manager you want to use primarily (for all the other commands, e.g., installing packages). You can always change the configuration with `unipkg --set update` or `unipkg --set primary`, more about that under "Commands". 
 2. When executing a command like `unipkg install firefox` it translates it to the equivalent command of the chosen package manager (e.g., for `apt` `sudo apt install firefox` or for `pacman` `sudo pacman -S firefox`).
 3. The now translated command wil be executed in the current environment. Remember that most likely you will be asked by `sudo` to enter your password. 
 
@@ -16,11 +16,11 @@ Log file is on `~/.config/unipkg/unipkg.log`
 
 - Compatible with most Linux distributions.
 - Supports common package management commands: `update`, `upgrade`, `install`, `remove`, `clean`, `searchlocal`, `search`, `info` and `addrepo`.
-- Automatically detects the available package manager(s) on the system.
+- Automatically detects the available package manager(s) on your system.
 
 ## Requirements
 
-- at least Python 3.10
+- Python version 3.10 or newer (check with `python3 --version`)
 - Linux operating system
 
 ## Compatible package managers
@@ -42,12 +42,20 @@ Log file is on `~/.config/unipkg/unipkg.log`
 - `snap`
 - `flatpak`
 
-**(Please report any problems!)**
+**(Please report any issues!)**
 
 ## Installation
 
-1. ensure you have at least Python version 3.10 installed on your Linux system
-2. run `pip install unipkg`
+```bash
+pipx install git+https://github.com/SudoMakeMeASandwichDE/unipkg.git
+```
+Make sure you have [pipx](https://github.com/pypa/pipx) installed
+
+## Update
+
+```bash
+pipx upgrade unipkg
+```
 
 ## Usage
 
@@ -68,10 +76,6 @@ unipkg <manage> [packages]
 - `searchlocal`: Search for installed packages.
 - `info`: Display information for a package.
 - `addrepo`: Add an external repository.
-- `everything`: Executes the `update`, `upgrade` and `clean`-command all at once.
-- `--set <update or primary>`: Configure, which package managers you want to update and on which you want to use the package management commands (install, remove, search, etc.).
+- `--set update`: Configure, which of your used package managers you want to update with the the `update`- and `upgrade`-command
+- `--set primary`: Choose one package manager you want to use the package management commands (install, remove, search, etc.) on top of the update command.
 - `--pm <package manager>`: Execute a command for a specific package manager.
-
-## This isn't a finished version!
-
-But it works with it's few features. `unipkg` is in it's early development, and there will be many features added in near future. For this moment, `unipkg` only works with basic commands, but you can expect some more interesting features coming in the next few weeks and months. 

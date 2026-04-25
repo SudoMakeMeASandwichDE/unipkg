@@ -101,5 +101,5 @@ def settings(update=False, manage=False):
                     continue
 
     else:
-        log(f"only one package manager available: {vars.pms[0]}, set as primary and update pm")
+        log(f"Only one package manager available: {vars.pms[0]}, set as primary and update pm")
         print(f"Only one package manager is available: {vars.pms[0]}. It will be used.")

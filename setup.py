@@ -23,6 +23,7 @@ setup(
     py_modules=["unipkg"],
     install_requires=[
         'rich'
+        'distro'
     ],
     entry_points={
         "console_scripts": [

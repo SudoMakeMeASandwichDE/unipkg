@@ -22,7 +22,7 @@ setup(
     packages=['src'],
     py_modules=["unipkg"],
     install_requires=[
-        'rich'
+        'rich',
         'distro'
     ],
     entry_points={

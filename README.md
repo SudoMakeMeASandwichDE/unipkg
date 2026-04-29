@@ -15,27 +15,25 @@ Log file is on `~/.config/unipkg/unipkg.log`
 ## Features
 
 - Compatible with most Linux distributions.
-- Supports common package management commands: `update`, `upgrade`, `install`, `remove`, `clean`, `searchlocal`, `search`, `info` and `addrepo`.
+- Supports common package management commands: `update`, `upgrade`, `update-repo`, `install`, `remove`, `clean`, `searchlocal`, `search`, `info` and `addrepo`.
 - Automatically detects the available package manager(s) on your system.
 
 ## Requirements
 
 - Python version 3.10 or newer (check with `python3 --version`)
-- Linux operating system
+- Linux distribution with one of the following package managers:
 
-## Compatible package managers
+  - `apt` (Debian/Ubuntu)
+  - `pacman` (Arch)
+  - `yay` (Arch)
+  - `dnf` (Fedora/CentOS)
+  - `zypper` (OpenSUSE)
+  - `apk` (Alpine Linux)
+  - Portage (gentoo)
+  - `snap` (universal)
+  - `flatpak` (universal)
 
-- `apt` (Debian/Ubuntu)
-- `pacman` (Arch)
-- `yay` (Arch)
-- `dnf` (Fedora/CentOS)
-- `zypper` (OpenSUSE)
-- `apk` (Alpine Linux)
-- Portage (gentoo)
-- `snap` (universal)
-- `flatpak` (universal)
-
-## Tested package managers
+**The following package managers have been tested:**
 
 - `apt`
 - `pacman`
@@ -49,7 +47,7 @@ Log file is on `~/.config/unipkg/unipkg.log`
 ```bash
 pipx install git+https://github.com/SudoMakeMeASandwichDE/unipkg.git
 ```
-Make sure you have [pipx](https://github.com/pypa/pipx) installed
+Make sure you have [pipx](https://github.com/pypa/pipx) installed.
 
 ## Update
 
@@ -67,8 +65,9 @@ unipkg <manage> [packages]
 ```
 ## Commands
 
-- `update`: Update the package manager's database.
+- `update`: Update and upgrade of your packages.
 - `upgrade`: Upgrade installed packages. You can specify package names or upgrade all.
+- `update-repo`: Update you package managers' databases.
 - `install`: Install specified packages.
 - `remove`: Remove specified packages.
 - `clean`: Clean up unused dependencies.

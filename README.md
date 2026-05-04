@@ -70,7 +70,7 @@ unipkg <manage> [packages]
 - `update-repo`: Update you package managers' databases.
 - `install`: Install specified packages.
 - `remove`: Remove specified packages.
-- `clean`: Clean up unused dependencies.
+- `clean`: Remove unused dependencies and clean up cache.
 - `search`: Search for packages in the online repository.
 - `searchlocal`: Search for installed packages.
 - `info`: Display information for a package.

@@ -49,7 +49,7 @@ pipx install git+https://github.com/SudoMakeMeASandwichDE/unipkg.git
 ```
 Make sure you have [pipx](https://github.com/pypa/pipx) installed.
 
-## Update
+## Update unipkg
 
 ```bash
 pipx upgrade unipkg
